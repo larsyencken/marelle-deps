@@ -4,10 +4,10 @@
 %
 
 pkg(chicken).
-detect(chicken, _) :- which(csi, _).
-install(chicken, osx) :- install_brew(chicken).
+met(chicken, _) :- which(csi, _).
+meet(chicken, osx) :- meet_brew(chicken).
 
 pkg(racket).
-detect(racket, _) :- which(racket, _).
-install(racket, osx) :- install_brew('plt-racket').
-install(racket, linux(_)) :- install_apt(racket).
+met(racket, _) :- which(racket, _).
+meet(racket, osx) :- meet_brew('plt-racket').
+meet(racket, linux(_)) :- meet_apt(racket).

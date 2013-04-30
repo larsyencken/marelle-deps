@@ -6,11 +6,11 @@
 %
 
 pkg(vim).
-detect(vim, _) :- which(vim, _).
-install(vim, osx) :- install_brew(vim).
-install(vim, linux(_)) :- install_apt(htop).
+met(vim, _) :- which(vim, _).
+meet(vim, osx) :- meet_brew(vim).
+meet(vim, linux(_)) :- meet_apt(htop).
 
 pkg(htop).
-detect(htop, _) :- which(htop, _).
-install(vim, osx) :- install_brew(htop).
-install(vim, linux(_)) :- install_apt(htop).
+met(htop, _) :- which(htop, _).
+meet(vim, osx) :- meet_brew(htop).
+meet(vim, linux(_)) :- meet_apt(htop).
