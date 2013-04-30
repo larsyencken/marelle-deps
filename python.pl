@@ -18,3 +18,9 @@ detect(scipy, _) :- python_import(scipy).
 
 pkg('SimpleCV').
 detect('SimpleCV', _) :- python_import('SimpleCV').
+
+pkg(virtualenv).
+detect(virtualenv, _) :- python_import(virtualenv).
+
+pkg(networkx).
+detect(networkx, _) :- python_import(networkx).
