@@ -4,7 +4,7 @@
 %
 
 python_import(Pkg) :-
-    join(['python -c \'import ', Pkg, '\' &>/dev/null'], Cmd),
+    join(['python -c \'import ', Pkg, '\' 2>/dev/null'], Cmd),
     shell(Cmd, 0).
 
 pkg(pandas).
