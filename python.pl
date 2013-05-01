@@ -46,16 +46,21 @@ meet(P, _) :- pip_pkg(P), !, install_pip(P).
 
 command_pkg(anytop).
 meet(anytop, _) :- install_pip(anytop).
-depends(anytop, _, [pip]).
 
 % install_pip(+Pkg) is semidet.
 %   Try to install the pacakge with pip sans sudo.
 install_pip(Pkg) :-
+    which(pip, Pip),
+    ( access_file(Pip, write) ->
+        Sudo = ''
+    ;
+        Sudo = 'sudo '
+    ),
     join(['Installing ', Pkg, ' with pip'], Msg),
     writeln(Msg),
-    join(['pip install ', Pkg], Cmd),
+    join([Sudo, 'pip install ', Pkg], Cmd),
     shell(Cmd, 0).
 
 command_pkg(ipython).
-meet(ipython, osx) :- install_pip(ipython).
-meet(ipython, linux(_)) :- install_apt(ipython).
+installs_with_apt(ipython).
+installs_with_brew(ipython).

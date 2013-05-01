@@ -40,3 +40,41 @@ make_executable(Path) :-
 curl(Source, Dest) :-
     join(['curl -o ', Dest, ' ', Source], Cmd),
     shell(Cmd).
+
+
+:- multifile installs_with_apt/1.
+:- multifile installs_with_apt/2.
+:- multifile installs_with_apt/3.
+
+met(P, linux(Codename)) :-
+    installs_with_apt(P, Codename, PkgName), !,
+    check_dpkg(PkgName).
+
+meet(P, linux(Codename)) :-
+    installs_with_apt(P, Codename, PkgName), !,
+    install_apt(PkgName).
+
+check_dpkg(PkgName) :-
+    join(['dpkg -s ', PkgName, ' >/dev/null 2>/dev/null'], Cmd),
+    shell(Cmd).
+
+installs_with_apt(P, _, P) :- 
+    (
+        installs_with_apt(P)
+    ;
+        installs_with_apt(P, P)
+    ).
+
+:- multifile installs_with_brew/1.
+:- multifile installs_with_brew/2.
+
+met(P, osx) :-
+    installs_with_brew(P, PkgName), !,
+    join(['/usr/local/Cellar/', PkgName], Dir),
+    isdir(Dir).
+
+meet(P, osx) :-
+    installs_with_brew(P, PkgName), !,
+    install_brew(PkgName).
+
+installs_with_brew(P, P) :- installs_with_brew(P).

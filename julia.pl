@@ -35,8 +35,14 @@ meet('__julia symlinked', _) :-
     shell('ln -s ~/.local/julia/julia ~/.local/bin/julia').
 
 pkg(ncurses).
-met(ncurses, osx) :- exists_file('/usr/lib/libncurses.dylib').
-met(ncurses, linux(_)) :- exists_file('/usr/lib/libncurses.so').
+met(ncurses, osx) :- 
+    isfile('/usr/lib/libncurses.dylib').
+installs_with_apt(ncurses, raring, libncurses5).
 
 command_pkg(gfortran).
+installs_with_apt(gfortran).
+installs_with_brew(gfortran).
+
 command_pkg(m4).
+installs_with_apt(m4).
+installs_with_brew(m4).

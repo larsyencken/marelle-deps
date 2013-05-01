@@ -7,7 +7,7 @@
 
 command_pkg(drake).
 meet(drake, _).
-depends(drake, _, ['__drake executable set up']).
+depends(drake, _, ['java', '__drake executable set up']).
 
 git_step('__drake checked out',
     'https://github.com/Factual/drake',

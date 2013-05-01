@@ -6,9 +6,9 @@
 %
 
 command_pkg(vim).
-meet(vim, osx) :- install_brew(vim).
-meet(vim, linux(_)) :- install_apt(htop).
+installs_with_brew(vim).
+installs_with_apt(vim, 'vim-nox').
 
 command_pkg(htop).
-meet(vim, osx) :- install_brew(htop).
-meet(vim, linux(_)) :- install_apt(htop).
+installs_with_brew(htop).
+installs_with_apt(htop).
