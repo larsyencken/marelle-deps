@@ -6,9 +6,7 @@
 %
 
 pkg(julia).
-met(julia, _) :-
-    home_dir('.local/bin/julia', F),
-    exists_file(F).
+met(julia, _) :- isfile('~/.local/bin/julia').
 meet(julia, _).
 depends(julia, _, [
     '__julia checked out',
@@ -16,18 +14,13 @@ depends(julia, _, [
     '__julia symlinked'
 ]).
 
-pkg('__julia checked out').
-met('__julia checked out', _) :-
-    home_dir('.local/julia', D),
-    exists_directory(D).
-meet('__julia checked out', _) :-
-    home_dir('.local/julia', D),
-    git_clone('https://github.com/JuliaLang/julia', D).
+git_step('__julia checked out',
+    'https://github.com/JuliaLang/julia',
+    '~/.local/julia'
+).
 
 pkg('__julia built').
-met('__julia built', _) :-
-    home_dir('.local/julia/julia', F),
-    exists_file(F).
+met('__julia built', _) :- isfile('~/.local/julia/julia').
 meet('__julia built', _) :-
     shell('cd ~/.local/julia && make -j4').
 depends('__julia built', _, [
@@ -37,9 +30,7 @@ depends('__julia built', _, [
 ]).
 
 pkg('__julia symlinked').
-met('__julia symlinked', _) :-
-    home_dir('.local/bin/julia', F),
-    exists_file(F).
+met('__julia symlinked', _) :- isfile('~/.local/bin/julia').
 meet('__julia symlinked', _) :-
     shell('ln -s ~/.local/julia/julia ~/.local/bin/julia').
 

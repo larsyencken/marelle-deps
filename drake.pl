@@ -9,18 +9,14 @@ command_pkg(drake).
 meet(drake, _).
 depends(drake, _, ['__drake executable set up']).
 
-pkg('__drake checked out').
-met('__drake checked out', _) :-
-    home_dir('.local/drake', D),
-    exists_directory(D).
-meet('__drake checked out', _) :-
-    home_dir('.local/drake', D),
-    git_clone('https://github.com/Factual/drake', D).
+git_step('__drake checked out',
+    'https://github.com/Factual/drake',
+    '~/.local/drake'
+).
 
 pkg('__drake built').
 met('__drake built', _) :-
-    home_dir('.local/drake/target/drake.jar', F),
-    exists_file(F).
+    isfile('~/.local/drake/target/drake.jar').
 meet('__drake built', _) :-
     shell('cd ~/.local/drake && ~/.local/bin/lein uberjar').
 depends('__drake built', _, [
@@ -29,11 +25,9 @@ depends('__drake built', _, [
 ]).
 
 pkg('__drake executable set up').
-met('__drake executable set up', _) :-
-    home_dir('.local/bin/drake', F),
-    exists_file(F).
+met('__drake executable set up', _) :- isfile('~/.local/bin/drake').
 meet('__drake executable set up', _) :-
-    home_dir('.local/bin/drake', F),
+    expand_path('~/.local/bin/drake', F),
     tell(F),
     writeln('#!/bin/bash'),
     writeln('exec java -jar ~/.local/drake/target/drake.jar "$@"'),
