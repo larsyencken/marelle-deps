@@ -3,12 +3,6 @@
 %  marelle-deps
 %
 
-:- multifile command_pkg/1.
-
-%  command_packages are met when their commands are in path
-pkg(P) :- command_pkg(P).
-met(P, _) :- which(P).
-
 %  python is a command package
 command_pkg(python).
 
@@ -29,7 +23,6 @@ depends(P, _, [python]) :-
 python_import(Pkg) :-
     join(['python -c \'import ', Pkg, '\' 2>/dev/null'], Cmd),
     shell(Cmd, 0).
-
 
 python_pkg(numpy).
 python_pkg(scipy).
