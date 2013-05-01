@@ -5,7 +5,7 @@
 
 command_pkg(chicken).
 meet(chicken, osx) :- install_brew(chicken).
-meet(chicken, linux(_)) :- install_apt(chicken).
+meet(chicken, linux(_)) :- install_apt('chicken-bin').
 
 command_pkg(racket).
 meet(racket, osx) :- install_brew('plt-racket').
