@@ -48,7 +48,7 @@ met(ncurses, osx) :- exists_file('/usr/lib/libncurses.dylib').
 met(ncurses, linux(_)) :- exists_file('/usr/lib/libncurses.so').
 
 pkg(gfortran).
-met(gfortran, _) :- which(gfortran, _).
+met(gfortran, _) :- which(gfortran).
 
 pkg(m4).
-met(m4, _) :- which(m4, _).
+met(m4, _) :- which(m4).

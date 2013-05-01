@@ -24,3 +24,6 @@ met(virtualenv, _) :- python_import(virtualenv).
 
 pkg(networkx).
 met(networkx, _) :- python_import(networkx).
+
+pkg(anytop).
+met(anytop, _) :- which(anytop).
