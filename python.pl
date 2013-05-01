@@ -3,8 +3,34 @@
 %  marelle-deps
 %
 
-%  python is a command package
+%
+%  PACKAGES
+%
+
 command_pkg(python).
+
+python_pkg(numpy).
+python_pkg(scipy).
+python_pkg('SimpleCV').
+python_pkg(matplotlib).
+python_pkg(networkx).
+
+pip_pkg(pandas).
+pip_pkg(virtualenv).
+pip_pkg(clint).
+pip_pkg(flask).
+
+command_pkg(ipython).
+installs_with_apt(ipython).
+installs_with_brew(ipython).
+
+command_pkg(anytop).
+meet(anytop, _) :- install_pip(anytop).
+
+
+%
+%  HELPERS
+%
 
 %  All python packages are packages.
 pkg(P) :- python_pkg(P).
@@ -24,19 +50,8 @@ python_import(Pkg) :-
     join(['python -c \'import ', Pkg, '\' 2>/dev/null'], Cmd),
     shell(Cmd, 0).
 
-python_pkg(numpy).
-python_pkg(scipy).
-python_pkg('SimpleCV').
-python_pkg(matplotlib).
-python_pkg(networkx).
-
 %  all pip packages are also Python packages
 python_pkg(P) :- pip_pkg(P).
-
-pip_pkg(pandas).
-pip_pkg(virtualenv).
-pip_pkg(clint).
-pip_pkg(flask).
 
 %  all pip packages depend on pip
 depends(P, _, [pip]) :- pip_pkg(P).
@@ -44,11 +59,8 @@ depends(P, _, [pip]) :- pip_pkg(P).
 %  meet pip packages on any platform by installing them with pip
 meet(P, _) :- pip_pkg(P), !, install_pip(P).
 
-command_pkg(anytop).
-meet(anytop, _) :- install_pip(anytop).
-
 % install_pip(+Pkg) is semidet.
-%   Try to install the pacakge with pip sans sudo.
+%   Try to install the pacakge with pip, maybe using sudo.
 install_pip(Pkg) :-
     which(pip, Pip),
     ( access_file(Pip, write) ->
@@ -60,7 +72,3 @@ install_pip(Pkg) :-
     writeln(Msg),
     join([Sudo, 'pip install ', Pkg], Cmd),
     shell(Cmd, 0).
-
-command_pkg(ipython).
-installs_with_apt(ipython).
-installs_with_brew(ipython).
