@@ -1,10 +1,10 @@
-pkg(fake1).
+pkg(__fake1).
 
-pkg(fake2).
-met(fake2, _) :- fail.
+pkg(__fake2).
+met(__fake2, _) :- fail.
 
-pkg('fake3-osx').
-met('fake3-osx', osx).
+pkg('__fake3-osx').
+met('__fake3-osx', osx).
 
-pkg('fake4-ubuntu').
-met('fake4-ubuntu', linux(_)).
+pkg('__fake4-ubuntu').
+met('__fake4-ubuntu', linux(_)).
