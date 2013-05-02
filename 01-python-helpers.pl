@@ -63,5 +63,5 @@ install_pip(Pkg) :-
     ),
     join(['Installing ', Pkg, ' with pip'], Msg),
     writeln(Msg),
-    join([Sudo, 'pip install ', Pkg], Cmd),
+    join([Sudo, 'pip install -U ', Pkg], Cmd),
     shell(Cmd, 0).

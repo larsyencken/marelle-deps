@@ -6,7 +6,10 @@
 command_pkg(python).
 
 command_pkg(pip).
-installs_with_apt(pip, python-pip).
+meet(pip, linux(_)) :-
+    install_apt('python-pip'),
+    install_pip('pip').
+
 depends(pip, _, [python]).
 
 python_pkg(numpy).
