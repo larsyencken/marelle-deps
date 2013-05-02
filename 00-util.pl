@@ -89,3 +89,12 @@ met(P, osx) :-
 meet(P, osx) :-
     installs_with_brew(P, PkgName), !,
     install_brew(PkgName).
+
+:- multifile meta_pkg/2.
+
+pkg(P) :- meta_pkg(P, _).
+
+met(P, _) :- meta_pkg(P, Deps), !,
+    maplist(met, Deps).
+
+meet(P, _) :- meta_pkg(P, _), !.

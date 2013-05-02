@@ -14,9 +14,7 @@ met(r, _) :- which('R').
 installs_with_apt(r, 'r-base').
 installs_with_brew(r, 'R').
 
-pkg('R for statistics').
-met('R for statistics', _).
-depends('R for statistics', _, [
+meta_pkg('r-recommended', [
   caret,
   reshape,
   randomForest,

@@ -12,6 +12,18 @@ meet(pip, linux(_)) :-
 
 depends(pip, _, [python]).
 
+meta_pkg('python-recommended', [
+    numpy,
+    scipy,
+    networkx,
+    matplotlib,
+    pandas,
+    distribute,
+    virtualenv,
+    pip,
+    ipython
+]).
+
 python_pkg(numpy).
 python_pkg(scipy).
 python_pkg('SimpleCV').
