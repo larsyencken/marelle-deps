@@ -27,7 +27,7 @@ met(P, _) :-
 % python_import(+Pkg) is semidet.
 %   Try to import the module in Python, failing if the import fails.
 python_import(Pkg) :-
-    join(['python -c \'import ', Pkg, '\' 2>/dev/null'], Cmd),
+    join(['python -c \'import ', Pkg, '\' >/dev/null 2>/dev/null'], Cmd),
     shell(Cmd, 0).
 
 %  All python packages depend on Python.
