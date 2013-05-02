@@ -42,9 +42,22 @@ curl(Source, Dest) :-
     shell(Cmd).
 
 
+% installs_with_apt(Pkg).
+%   Pkg installs with apt package of same name on all Ubuntu/Debian flavours
 :- multifile installs_with_apt/1.
+
+% installs_with_apt(Pkg, AptName).
+%   Pkg installs with apt package called AptName on all Ubuntu/Debian flavours
 :- multifile installs_with_apt/2.
+
+installs_with_apt(P, P) :- installs_with_apt(P).
+
+% installs_with_apt(Pkg, Codename, AptName).
+%   Pkg installs with apt package called AptName on given Ubuntu/Debian
+%   variant with given Codename.
 :- multifile installs_with_apt/3.
+
+installs_with_apt(P, _, P) :- installs_with_apt(P, P).
 
 met(P, linux(Codename)) :-
     installs_with_apt(P, Codename, PkgName), !,
@@ -58,15 +71,15 @@ check_dpkg(PkgName) :-
     join(['dpkg -s ', PkgName, ' >/dev/null 2>/dev/null'], Cmd),
     shell(Cmd).
 
-installs_with_apt(P, _, P) :- 
-    (
-        installs_with_apt(P)
-    ;
-        installs_with_apt(P, P)
-    ).
-
+% installs_with_brew(Pkg).
+%  Pkg installs with homebrew package of same name.
 :- multifile installs_with_brew/1.
+
+% installs_with_brew(Pkg, BrewName).
+%  Pkg installs with homebrew package called BrewName.
 :- multifile installs_with_brew/2.
+
+installs_with_brew(P, P) :- installs_with_brew(P).
 
 met(P, osx) :-
     installs_with_brew(P, PkgName), !,
@@ -76,5 +89,3 @@ met(P, osx) :-
 meet(P, osx) :-
     installs_with_brew(P, PkgName), !,
     install_brew(PkgName).
-
-installs_with_brew(P, P) :- installs_with_brew(P).
