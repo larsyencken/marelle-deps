@@ -56,7 +56,8 @@ meet(P, _) :-
 %   Try to install the pacakge with pip, maybe using sudo.
 install_pip(Pkg) :-
     which(pip, Pip),
-    ( access_file(Pip, write) ->
+    atom_concat(Parent, '/pip', Pip),
+    ( access_file(Parent, write) ->
         Sudo = ''
     ;
         Sudo = 'sudo '
