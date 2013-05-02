@@ -41,3 +41,8 @@ command_pkg(ipython).
 installs_with_apt(ipython).
 meet(ipython, osx) :- install_pip(ipython).
 depends(ipython, osx, [pip]).
+
+%  Vincent: a python to vega translator for charting
+%  https://github.com/wrobstory/vincent/
+python_pkg(vincent).
+meet(vincent, _) :- install_pip('https://github.com/wrobstory/vincent/archive/master.zip').
