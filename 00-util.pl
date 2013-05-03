@@ -57,7 +57,7 @@ installs_with_apt(P, P) :- installs_with_apt(P).
 %   variant with given Codename.
 :- multifile installs_with_apt/3.
 
-installs_with_apt(P, _, P) :- installs_with_apt(P, P).
+installs_with_apt(P, _, AptName) :- installs_with_apt(P, AptName).
 
 met(P, linux(Codename)) :-
     installs_with_apt(P, Codename, PkgName), !,
