@@ -8,3 +8,7 @@
 command_pkg(htop).
 installs_with_brew(htop).
 installs_with_apt(htop).
+
+command_pkg(mercurial).
+installs_with_brew(mercurial).
+installs_with_apt(mercurial).
