@@ -3,7 +3,9 @@
 %  marelle-deps
 %
 
-command_pkg(python).
+pkg(python).
+installs_with_brew(python).
+installs_with_apt(python, 'python-dev').
 
 command_pkg(pip).
 meet(pip, linux(_)) :-
