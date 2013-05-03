@@ -98,3 +98,5 @@ met(P, _) :- meta_pkg(P, Deps), !,
     maplist(met, Deps).
 
 meet(P, _) :- meta_pkg(P, _), !.
+
+depends(P, _, Deps) :- meta_pkg(P, Deps).
