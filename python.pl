@@ -7,8 +7,7 @@ command_pkg(python).
 
 command_pkg(pip).
 meet(pip, linux(_)) :-
-    install_apt('python-pip'),
-    install_pip('pip').
+    install_apt('python-pip').
 
 depends(pip, _, [python]).
 

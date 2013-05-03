@@ -42,10 +42,8 @@ depends(P, _, [pip]) :- pip_pkg(P).
 
 met(P, _) :-
     pip_pkg(P), !,
-    join(['pip show ', P], Cmd),
-    shellc(Cmd, Out),
-    atom_length(Out, L),
-    L > 0.
+    join(['pip freeze 2>/dev/null | cut -d \'=\' -f 1 | fgrep -q ', P], Cmd),
+    shell(Cmd).
 
 %  meet pip packages on any platform by installing them with pip
 meet(P, _) :-
