@@ -27,7 +27,6 @@ meta_pkg('python-recommended', [
 
 python_pkg(numpy).
 python_pkg(scipy).
-python_pkg('SimpleCV').
 
 pip_pkg(pandas).
 pip_pkg(virtualenv).
