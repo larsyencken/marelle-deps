@@ -9,7 +9,8 @@ installs_with_brew(vim).
 
 meta_pkg('dotvim', [
     '__dotvim checked out',
-    '__dotvim symlinked'
+    '__dotvim symlinked',
+    ctags
 ]).
 
 git_step(
@@ -23,3 +24,6 @@ symlink_step(
     '~/.vim/vimrc',
     '~/.vimrc'
 ).
+
+command_pkg(ctags).
+installs_with_apt(ctags, 'exuberant-ctags').
