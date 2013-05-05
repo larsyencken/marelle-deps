@@ -80,31 +80,12 @@ check_dpkg(PkgName) :-
     join(['dpkg -s ', PkgName, ' >/dev/null 2>/dev/null'], Cmd),
     bash(Cmd).
 
-% installs_with_brew(Pkg).
-%  Pkg installs with homebrew package of same name.
-:- multifile installs_with_brew/1.
-
-% installs_with_brew(Pkg, BrewName).
-%  Pkg installs with homebrew package called BrewName.
-:- multifile installs_with_brew/2.
-
-installs_with_brew(P, P) :- installs_with_brew(P).
-
-met(P, osx) :-
-    installs_with_brew(P, PkgName), !,
-    join(['/usr/local/Cellar/', PkgName], Dir),
-    isdir(Dir).
-
-meet(P, osx) :-
-    installs_with_brew(P, PkgName), !,
-    install_brew(PkgName).
-
 :- multifile meta_pkg/2.
 
 pkg(P) :- meta_pkg(P, _).
 
 met(P, _) :- meta_pkg(P, Deps), !,
-    maplist(met, Deps).
+    maplist(cached_met, Deps).
 
 meet(P, _) :- meta_pkg(P, _), !.
 
