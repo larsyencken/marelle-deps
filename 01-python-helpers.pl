@@ -15,11 +15,6 @@
 %   Pkg is a python module installable with pip.
 :- multifile pip_pkg/1.
 
-% pip_pkg(-Pkg, -Type) is nondet.
-%   Pkg is a python module installable with pip. Type is either command
-%   or module.
-:- multifile pip_pkg/2.
-
 %  All python packages are packages.
 pkg(P) :- python_pkg(P, _).
 
