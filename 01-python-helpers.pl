@@ -4,8 +4,12 @@
 %
 
 % python_pkg(-Pkg) is nondet.
-%   Pkg is a python module.
+%   Pkg is a python module imported using the same name.
 :- multifile python_pkg/1.
+
+% python_pkg(-Pkg, -ImportName) is nondet.
+%   Pkg is a python module imported by a different name.
+:- multifile python_pkg/2.
 
 % pip_pkg(-Pkg) is nondet.
 %   Pkg is a python module installable with pip.
@@ -17,12 +21,14 @@
 :- multifile pip_pkg/2.
 
 %  All python packages are packages.
-pkg(P) :- python_pkg(P).
+pkg(P) :- python_pkg(P, _).
 
 %  If it's a Python package, it's met if you can import it.
 met(P, _) :-
-    python_pkg(P), !,
-    python_import(P).
+    python_pkg(P, ImportName), !,
+    python_import(ImportName).
+
+python_pkg(P, P) :- python_pkg(P).
 
 % python_import(+Pkg) is semidet.
 %   Try to import the module in Python, failing if the import fails.
