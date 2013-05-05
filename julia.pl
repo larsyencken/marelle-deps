@@ -22,7 +22,7 @@ git_step('__julia checked out',
 pkg('__julia built').
 met('__julia built', _) :- isfile('~/.local/julia/julia').
 meet('__julia built', _) :-
-    shell('cd ~/.local/julia && make -j4').
+    bash('cd ~/.local/julia && make -j4').
 depends('__julia built', _, [
     gfortran,
     m4,
@@ -32,7 +32,7 @@ depends('__julia built', _, [
 pkg('__julia symlinked').
 met('__julia symlinked', _) :- isfile('~/.local/bin/julia').
 meet('__julia symlinked', _) :-
-    shell('ln -s ~/.local/julia/julia ~/.local/bin/julia').
+    bash('ln -s ~/.local/julia/julia ~/.local/bin/julia').
 
 pkg(ncurses).
 met(ncurses, osx) :-

@@ -8,3 +8,7 @@ met('__fake3-osx', osx).
 
 pkg('__fake4-ubuntu').
 met('__fake4-ubuntu', linux(_)).
+
+pkg('__fake5-slow').
+met('__fake5-slow', _) :- fail.
+meet('__fake5-slow', _) :- bash('sleep 3600').

@@ -39,7 +39,7 @@ pkg(P) :- r_pkg(P).
 met(P, _) :-
     r_pkg(P), !,
     join(['Rscript -e \'library("', P, '")\' >/dev/null 2>/dev/null'], Cmd),
-    shell(Cmd).
+    bash(Cmd).
 
 meet(P, _) :-
     r_pkg(P), !,
@@ -50,6 +50,6 @@ meet(P, _) :-
         Sudo = sudo
     ),
     join([Sudo, 'Rscript -e \'install.packages("', P, '", repos="', M, '")\''], Cmd),
-    shell(Cmd).
+    bash(Cmd).
 
 depends(P, _, [r]) :- r_pkg(P).

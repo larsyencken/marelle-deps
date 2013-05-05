@@ -18,7 +18,7 @@ pkg('__drake built').
 met('__drake built', _) :-
     isfile('~/.local/drake/target/drake.jar').
 meet('__drake built', _) :-
-    shell('cd ~/.local/drake && ~/.local/bin/lein uberjar').
+    bash('cd ~/.local/drake && ~/.local/bin/lein uberjar').
 depends('__drake built', _, [
     'leiningen',
     '__drake checked out'

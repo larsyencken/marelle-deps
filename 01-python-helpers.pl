@@ -34,7 +34,7 @@ python_pkg(P, P) :- python_pkg(P).
 %   Try to import the module in Python, failing if the import fails.
 python_import(Pkg) :-
     join(['python -c \'import ', Pkg, '\' >/dev/null 2>/dev/null'], Cmd),
-    shell(Cmd, 0).
+    bash(Cmd).
 
 %  All python packages depend on Python.
 depends(P, _, [python]) :-
@@ -49,7 +49,7 @@ depends(P, _, [pip]) :- pip_pkg(P).
 met(P, _) :-
     pip_pkg(P), !,
     join(['pip freeze 2>/dev/null | cut -d \'=\' -f 1 | fgrep -q ', P], Cmd),
-    shell(Cmd).
+    bash(Cmd).
 
 %  meet pip packages on any platform by installing them with pip
 meet(P, _) :-
@@ -69,4 +69,4 @@ install_pip(Pkg) :-
     join(['Installing ', Pkg, ' with pip'], Msg),
     writeln(Msg),
     join(['umask a+rx && ', Sudo, 'pip install -U ', Pkg], Cmd),
-    shell(Cmd, 0).
+    bash(Cmd).

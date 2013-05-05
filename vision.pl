@@ -41,4 +41,4 @@ meet('__simplecv installed', _) :-
         Sudo = 'sudo '
     ),
     join(['umask a+rx && cd ~/.local/SimpleCV && ', Sudo, 'python setup.py develop'], Cmd),
-    shell(Cmd).
+    bash(Cmd).

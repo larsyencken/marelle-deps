@@ -35,11 +35,11 @@ isdir(Path0) :-
 
 make_executable(Path) :-
     join(['chmod a+x ', Path], Cmd),
-    shell(Cmd).
+    bash(Cmd).
 
 curl(Source, Dest) :-
     join(['curl -o ', Dest, ' ', Source], Cmd),
-    shell(Cmd).
+    bash(Cmd).
 
 
 % installs_with_apt(Pkg).
@@ -78,7 +78,7 @@ meet(P, linux(Codename)) :-
 
 check_dpkg(PkgName) :-
     join(['dpkg -s ', PkgName, ' >/dev/null 2>/dev/null'], Cmd),
-    shell(Cmd).
+    bash(Cmd).
 
 % installs_with_brew(Pkg).
 %  Pkg installs with homebrew package of same name.
