@@ -26,7 +26,17 @@ meta_pkg('python-recommended', [
 ]).
 
 python_pkg(numpy).
+installs_with_apt(numpy, 'python-numpy').
+installs_with_brew(numpy).
+depends(numpy, osx, ['homebrew-science-tap']).
+
 python_pkg(scipy).
+installs_with_apt(scipy, 'python-scipy').
+installs_with_brew(scipy).
+depends(scipy, _, [gfortran, cython]).
+depends(scipy, osx, ['homebrew-science-tap']).
+
+brew_tap('homebrew-science-tap', 'homebrew/science').
 
 pip_pkg(pandas).
 pip_pkg(virtualenv).
@@ -48,3 +58,5 @@ meet(vincent, _) :- install_pip('https://github.com/wrobstory/vincent/archive/ma
 
 python_pkg(matplotlib).
 installs_with_apt(matplotlib, 'python-matplotlib').
+installs_with_brew(matplotlib).
+depends(matplotlib, osx, ['homebrew-samueljohn-tap']).

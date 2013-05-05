@@ -7,6 +7,7 @@
 
 python_pkg('python-opencv', opencv).
 installs_with_apt('python-opencv').
+depends('python-opencv', osx, opencv).
 
 meta_pkg(simplecv, [
     'python-opencv',
@@ -26,6 +27,14 @@ git_step(
 
 python_pkg(pygame).
 installs_with_apt(pygame, 'python-pygame').
+installs_with_brew(pygame).
+depends(pygame, osx, [
+    'homebrew-headonly-tap',
+    'homebrew-samueljohn-tap'
+]).
+
+brew_tap('homebrew-headonly-tap', 'homebrew/headonly').
+brew_tap('homebrew-samueljohn-tap', 'samueljohn/python').
 
 pkg(opencv).
 installs_with_brew(opencv).
@@ -42,3 +51,5 @@ meet('__simplecv installed', _) :-
     ),
     join(['umask a+rx && cd ~/.local/SimpleCV && ', Sudo, 'python setup.py develop'], Cmd),
     bash(Cmd).
+
+pip_pkg(cython).
