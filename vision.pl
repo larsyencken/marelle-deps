@@ -54,3 +54,9 @@ installs_with_brew(opencv).
 depends(opencv, osx, ['homebrew-science-tap']).
 
 pip_pkg(cython).
+
+pkg(zbar).
+installs_with_brew(zbar).
+
+pip_pkg('python-zbar', zbar, zbar).
+depends('python-zbar', _, [zbar]).
