@@ -8,7 +8,7 @@
 % python's opencv module
 python_pkg(cv2).
 installs_with_apt(cv2, 'python-opencv').
-depends(cv2, osx, [opencv]).
+depends(cv2, _, [opencv]).
 
 pip_pkg(
     simplecv,
