@@ -15,6 +15,12 @@
 %   Pkg is a python module installable with pip.
 :- multifile pip_pkg/1.
 
+% pip_pkg(-Pkg, -PkgName, -PkgSource) is nondet.
+%   Pkg is a python module installable with pip.
+:- multifile pip_pkg/3.
+
+pip_pkg(P, P, P) :- pip_pkg(P).
+
 %  All python packages are packages.
 pkg(P) :- python_pkg(P, _).
 
@@ -35,19 +41,19 @@ depends(P, _, [python]) :-
     python_pkg(P).
 
 %  All pip packages are also packages.
-pkg(P) :- pip_pkg(P).
+pkg(P) :- pip_pkg(P, _, _).
 
 %  all pip packages depend on pip
-depends(P, _, [pip]) :- pip_pkg(P).
+depends(P, _, [pip]) :- pip_pkg(P, _, _).
 
 met(P, _) :-
-    pip_pkg(P), !,
-    bash(['pip freeze 2>/dev/null | cut -d \'=\' -f 1 | fgrep -qi ', P]).
+    pip_pkg(P, PkgName, _), !,
+    bash(['pip freeze 2>/dev/null | cut -d \'=\' -f 1 | fgrep -qi ', PkgName]).
 
 %  meet pip packages on any platform by installing them with pip
 meet(P, _) :-
-    pip_pkg(P), !,
-    install_pip(P).
+    pip_pkg(P, _, PkgSource), !,
+    install_pip(PkgSource).
 
 % install_pip(+Pkg) is semidet.
 %   Try to install the pacakge with pip, maybe using sudo.
