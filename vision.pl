@@ -34,9 +34,16 @@ python_pkg(pygame).
 installs_with_apt(pygame, 'python-pygame').
 installs_with_brew(pygame).
 depends(pygame, osx, [
-    'homebrew-headonly-tap',
+    smpeg,
     'homebrew-samueljohn-tap'
 ]).
+
+pkg(smpeg).
+met(smpeg, osx) :-
+    isfile('/usr/local/lib/libsmpeg.dylib').
+meet(smpeg, osx) :-
+    bash('brew install --HEAD smpeg').
+depends(smpeg, osx, [brew, 'homebrew-headonly-tap']).
 
 brew_tap('homebrew-headonly-tap', 'homebrew/headonly').
 brew_tap('homebrew-samueljohn-tap', 'samueljohn/python').
