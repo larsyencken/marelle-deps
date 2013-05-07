@@ -5,6 +5,11 @@
 %  Support for computer vision.
 %
 
+meta_pkg('python-vision-recommended', [
+    'simplecv',
+    'python-zxing'
+]).
+
 % python's opencv module
 python_pkg(cv2).
 installs_with_apt(cv2, 'python-opencv').
@@ -58,5 +63,31 @@ pip_pkg(cython).
 pkg(zbar).
 installs_with_brew(zbar).
 
+% TODO segfault issue
 pip_pkg('python-zbar', zbar, zbar).
 depends('python-zbar', _, [zbar]).
+
+pkg(tesseract).
+installs_with_brew(tesseract).
+installs_with_apt(tesseract).
+
+% TODO meet block
+% https://code.google.com/p/python-tesseract/
+python_pkg('python-tesseract', tesseract).
+depends('python-tesseract', _, [tesseract]).
+
+cwd(Old, New) :- working_directory(Old, New).
+
+% barcode reading with zxing
+pkg(zxing).
+met(zxing, _) :- isfile('~/.local/zxing-1.6/javase/javase.jar').
+meet(zxing, _) :-
+    bash('cd ~/.local && wget http://zxing.googlecode.com/files/ZXing-1.6.zip'),
+    bash('cd ~/.local && unzip ZXing-1.6.zip && rm ZXing-1.6.zip'),
+    bash('cd ~/.local/zxing-1.6/core && ant build'),
+    bash('cd ~/.local/zxing-1.6/javase && ant build').
+depends(zxing, _, [java, ant]).
+
+command_pkg(ant).
+
+pip_pkg('python-zxing', zxing, 'https://github.com/oostendo/python-zxing/zipball/master').
