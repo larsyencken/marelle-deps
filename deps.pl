@@ -5,10 +5,10 @@
 %  Meta-deps.
 %
 
-:- dynamic hack_state/1.
+:- dynamic deps_have_been_updated/0.
 
-pkg('update-deps').
-met('update-deps', _) :- hack_state('update-deps').
-meet('update-deps', _) :-
+pkg('depupdate').
+met('depupdate', _) :- deps_have_been_updated.
+meet('depupdate', _) :-
     bash('cd ~/.marelle/deps && git pull'),
-    assertz(hack_state('update-deps')).
+    assertz(deps_have_been_updated).
