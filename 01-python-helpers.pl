@@ -15,11 +15,16 @@
 %   Pkg is a python module installable with pip.
 :- multifile pip_pkg/1.
 
+% pip_pkg(-Pkg, -PkgName) is nondet.
+%   Pkg is a python module installable with pip.
+:- multifile pip_pkg/2.
+
 % pip_pkg(-Pkg, -PkgName, -PkgSource) is nondet.
 %   Pkg is a python module installable with pip.
 :- multifile pip_pkg/3.
 
 pip_pkg(P, P, P) :- pip_pkg(P).
+pip_pkg(P, PkgName, PkgName) :- pip_pkg(P, PkgName).
 
 %  All python packages are packages.
 pkg(P) :- python_pkg(P, _).
