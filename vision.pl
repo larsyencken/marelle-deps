@@ -62,9 +62,14 @@ pip_pkg(cython).
 
 pkg(zbar).
 installs_with_brew(zbar).
+installs_with_apt(zbar, 'libzbar-dev').
 
 % TODO segfault issue
-pip_pkg('python-zbar', zbar, zbar).
+python_pkg('python-zbar', zbar, zbar).
+meet('python-zbar', osx) :-
+    bash('pip install zbar').
+meet('python-zbar', linux(_)) :-
+    install_apt('python-zbar').
 depends('python-zbar', _, [zbar]).
 
 pkg(tesseract).
