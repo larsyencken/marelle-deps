@@ -65,7 +65,7 @@ installs_with_brew(zbar).
 installs_with_apt(zbar, 'libzbar-dev').
 
 % TODO segfault issue
-python_pkg('python-zbar', zbar, zbar).
+python_pkg('python-zbar', zbar).
 meet('python-zbar', osx) :-
     bash('pip install zbar').
 meet('python-zbar', linux(_)) :-
