@@ -13,10 +13,6 @@ command_pkg(mercurial).
 installs_with_brew(mercurial).
 installs_with_apt(mercurial).
 
-command_pkg(tig).
-installs_with_brew(tig).
-installs_with_apt(tig).
-
 command_pkg(pstree).
 installs_with_brew(pstree).
 installs_with_apt(pstree, psmisc).
