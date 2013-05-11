@@ -64,3 +64,6 @@ python_pkg(matplotlib).
 installs_with_apt(matplotlib, 'python-matplotlib').
 installs_with_brew(matplotlib).
 depends(matplotlib, osx, ['homebrew-samueljohn-tap']).
+
+command_pkg(pypy).
+installs_with_brew(pypy).
