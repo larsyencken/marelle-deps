@@ -21,7 +21,7 @@ installs_with_apt(P, P) :- installs_with_apt(P).
 
 installs_with_apt(P, _, AptName) :- installs_with_apt(P, AptName).
 
-depends(P, linux(_), [apt_get_update]) :-
+depends(P, linux(_), ['apt-get-update']) :-
     installs_with_apt(P, _, _).
 
 :- dynamic apt_updated/0.
