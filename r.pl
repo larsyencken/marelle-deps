@@ -46,7 +46,7 @@ meet(P, _) :-
     ( access_file('/usr/local/lib', write) ->
         Sudo = ''
     ;
-        Sudo = sudo
+        Sudo = 'sudo '
     ),
     bash([Sudo, 'Rscript -e \'install.packages("', P, '", repos="', M, '")\'']).
 
