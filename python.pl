@@ -26,7 +26,8 @@ meta_pkg('python-recommended', [
     distribute,
     virtualenv,
     pip,
-    ipython
+    ipython,
+    csvkit
 ]).
 
 python_pkg(numpy).
@@ -49,6 +50,7 @@ pip_pkg(flask).
 pip_pkg(distribute).
 pip_pkg(anytop).
 pip_pkg(networkx).
+pip_pkg(csvkit).
 
 command_pkg(ipython).
 installs_with_apt(ipython).
