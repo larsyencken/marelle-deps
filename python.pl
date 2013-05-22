@@ -51,6 +51,7 @@ pip_pkg(distribute).
 pip_pkg(anytop).
 pip_pkg(networkx).
 pip_pkg(csvkit).
+pip_pkg('nodebox-opengl').
 
 command_pkg(ipython).
 installs_with_apt(ipython).
@@ -69,3 +70,10 @@ depends(matplotlib, osx, ['homebrew-samueljohn-tap']).
 
 command_pkg(pypy).
 installs_with_brew(pypy).
+
+pip_pkg(pyaudio).
+depends(pyaudio, _, [portaudio]).
+
+pkg(portaudio).
+installs_with_apt(portaudio).
+installs_with_brew(portaudio).
