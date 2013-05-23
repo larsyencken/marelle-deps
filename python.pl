@@ -23,6 +23,7 @@ meta_pkg('python-recommended', [
     networkx,
     matplotlib,
     pandas,
+    statsmodels,
     distribute,
     virtualenv,
     pip,
@@ -51,6 +52,7 @@ pip_pkg(distribute).
 pip_pkg(anytop).
 pip_pkg(networkx).
 pip_pkg(csvkit).
+pip_pkg(statsmodels).
 pip_pkg('nodebox-opengl').
 
 command_pkg(ipython).
