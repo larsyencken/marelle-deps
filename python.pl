@@ -76,6 +76,4 @@ installs_with_brew(pypy).
 pip_pkg(pyaudio).
 depends(pyaudio, _, [portaudio]).
 
-pkg(portaudio).
-installs_with_apt(portaudio).
-installs_with_brew(portaudio).
+managed_pkg(portaudio).

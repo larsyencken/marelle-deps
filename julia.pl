@@ -40,10 +40,5 @@ met(ncurses, osx) :-
 installs_with_apt(ncurses, precise, libncurses5).
 installs_with_apt(ncurses, raring, libncurses5).
 
-command_pkg(gfortran).
-installs_with_apt(gfortran).
-installs_with_brew(gfortran).
-
-command_pkg(m4).
-installs_with_apt(m4).
-installs_with_brew(m4).
+managed_pkg(gfortran).
+managed_pkg(m4).

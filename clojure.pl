@@ -5,9 +5,7 @@
 %  A make replacement in Clojure.
 %
 
-pkg(clojure).
-installs_with_brew(clojure).
-installs_with_apt(clojure).
+managed_pkg(clojure).
 
 pkg(leiningen).
 met(leiningen, _) :- isfile('~/.local/bin/lein').

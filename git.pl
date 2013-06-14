@@ -17,6 +17,4 @@ meet(gitx, osx) :-
     bash('cd ~/Downloads && unzip GitXStable.app.zip'),
     bash('mv ~/Downloads/GitX.app /Applications/GitX.app').
 
-command_pkg(tig).
-installs_with_brew(tig).
-installs_with_apt(tig).
+managed_pkg(tig).

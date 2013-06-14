@@ -72,9 +72,7 @@ meet('python-zbar', linux(_)) :-
     install_apt('python-zbar').
 depends('python-zbar', _, [zbar]).
 
-pkg(tesseract).
-installs_with_brew(tesseract).
-installs_with_apt(tesseract).
+managed_pkg(tesseract).
 
 % TODO meet block
 % https://code.google.com/p/python-tesseract/
