@@ -40,6 +40,17 @@ pip_pkg(networkx).
 pip_pkg(csvkit).
 pip_pkg(statsmodels).
 pip_pkg('nodebox-opengl').
+pip_pkg(nose).
+pip_pkg(cython).
+pip_pkg(cffi).
+pip_pkg(argparse).
+pip_pkg(llvmmath).
+
+python_pkg(llvmpy, llvm).
+meet(llvmpy, _).
+depends(llvmpy, _, [llvm]).
+
+managed_pkg(llvm).
 
 command_pkg(ipython).
 installs_with_apt(ipython).
@@ -63,3 +74,32 @@ pip_pkg(pyaudio).
 depends(pyaudio, _, [portaudio]).
 
 managed_pkg(portaudio).
+
+python_pkg(numba).
+meet(numba, _) :-
+    which(python, Python),
+    atom_concat(Parent, '/python', Python),
+    ( access_file(Parent, write) ->
+        Sudo = ''
+    ;
+        Sudo = 'sudo '
+    ),
+    bash(['umask a+rx && cd ~/.local/numba && ', Sudo,
+          'python setup.py install']).
+depends(numba, _, [
+    distribute,
+    nose,
+    numpy,
+    cython,
+    llvmpy,
+    cffi,
+    argparse,
+    llvmmath,
+    '__numba checked out'
+]).
+
+git_step(
+    '__numba checked out',
+    'git://github.com/numba/numba.git',
+    '~/.local/numba'
+).
