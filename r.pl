@@ -22,7 +22,8 @@ meta_pkg('r-recommended', [
   boot,
   tree,
   e1071,
-  medley
+  medley,
+  xts
 ]).
 
 cran_pkg(caret).
@@ -34,6 +35,7 @@ cran_pkg(tree).
 cran_pkg(e1071).
 cran_pkg(medley).
 cran_pkg(devtools).
+cran_pkg(xts).
 
 r_pkg(P) :- cran_pkg(P) ; rgithub_pkg(P).
 
