@@ -10,7 +10,8 @@ installs_with_brew(vim).
 meta_pkg('dotvim', [
     '__dotvim checked out',
     '__dotvim symlinked',
-    ctags
+    ctags,
+    flake8
 ]).
 
 git_step(
@@ -27,3 +28,5 @@ symlink_step(
 
 command_pkg(ctags).
 installs_with_apt(ctags, 'exuberant-ctags').
+
+pip_pkg(flake8).
