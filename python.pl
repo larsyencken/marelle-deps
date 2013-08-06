@@ -14,7 +14,9 @@ meta_pkg('python-recommended', [
     virtualenv,
     pip,
     ipython,
-    csvkit
+    csvkit,
+    h5py,
+    tables
 ]).
 
 python_pkg(numpy).
@@ -40,6 +42,8 @@ pip_pkg(networkx).
 pip_pkg(csvkit).
 pip_pkg(statsmodels).
 pip_pkg('nodebox-opengl').
+pip_pkg(h5py).
+pip_pkg(tables).
 
 command_pkg(ipython).
 installs_with_apt(ipython).
