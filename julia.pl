@@ -42,3 +42,32 @@ installs_with_apt(ncurses, raring, libncurses5).
 
 managed_pkg(gfortran).
 managed_pkg(m4).
+
+% define julia packages
+:- multifile julia_pkg/1.
+:- dynamic julia_updated/0.
+
+pkg(P) :- julia_pkg(P).
+
+met(P, _) :-
+    julia_pkg(P), !,
+    bash(['! julia -e "using ', P, '" 2>&1 | fgrep ERROR &>/dev/null']).
+
+meet(P, _) :-
+    julia_pkg(P), !,
+    ( \+ julia_updated ->
+        bash(['julia -e "Pkg.update()"']),
+        assertz(julia_updated)
+    ;
+        true
+    ),
+    bash(['julia -e \'Pkg.add("', P, '")\'']).
+
+meta_pkg('julia-recommended', [
+    'julia',
+    'PyCall',
+    'DataFrames'
+]).
+
+julia_pkg('PyCall').
+julia_pkg('DataFrames').
