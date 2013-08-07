@@ -4,6 +4,10 @@ Personal package dependencies for [Marelle](https://github.com/larsyencken/marel
 
 ## Meta packages
 
+These deps come with some recommended collections for different languages and purposes.
+
 - `python-recommended`: a set of Python packages commonly used for statistics and data analysis
 - `python-vision-recommended`: Python packages for computer vision with SimpleCV
 - `r-recommended`: a set of R Packages for data analysis and machine learning
+
+Run `marelle list recommended` to see more.
