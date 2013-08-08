@@ -10,7 +10,6 @@ meta_pkg('python-recommended', [
     matplotlib,
     pandas,
     statsmodels,
-    distribute,
     virtualenv,
     pip,
     ipython,
@@ -32,11 +31,12 @@ depends(scipy, osx, ['homebrew-science-tap']).
 
 brew_tap('homebrew-science-tap', 'homebrew/science').
 
+command_pkg(virtualenv).
+installs_with_pip(virtualenv).
+
 pip_pkg(pandas).
-pip_pkg(virtualenv).
 pip_pkg(clint).
 pip_pkg(flask).
-pip_pkg(distribute).
 pip_pkg(anytop).
 pip_pkg(networkx).
 pip_pkg(csvkit).
