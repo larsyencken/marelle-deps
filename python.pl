@@ -67,3 +67,6 @@ pip_pkg(pyaudio).
 depends(pyaudio, _, [portaudio]).
 
 managed_pkg(portaudio).
+
+command_pkg(fabric, fab).
+installs_with_pip(fabric).
