@@ -70,3 +70,8 @@ managed_pkg(portaudio).
 
 command_pkg(fabric, fab).
 installs_with_pip(fabric).
+
+pip_pkg('scikits.audiolab').
+depends('scikits.audiolab', _, [libsndfile]).
+
+managed_pkg('libsndfile').
