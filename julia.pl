@@ -51,23 +51,24 @@ pkg(P) :- julia_pkg(P).
 
 met(P, _) :-
     julia_pkg(P), !,
-    bash(['! julia -e "using ', P, '" 2>&1 | fgrep ERROR &>/dev/null']).
+    atom_concat(Pkg, '.jl', P),
+    bash(['! julia -e "using ', Pkg, '" 2>&1 | fgrep ERROR &>/dev/null']).
 
 meet(P, _) :-
     julia_pkg(P), !,
+    atom_concat(Pkg, '.jl', P),
     ( \+ julia_updated ->
         bash(['julia -e "Pkg.update()"']),
         assertz(julia_updated)
     ;
         true
     ),
-    bash(['julia -e \'Pkg.add("', P, '")\'']).
+    bash(['julia -e \'Pkg.add("', Pkg, '")\'']).
 
 meta_pkg('julia-recommended', [
-    'julia',
-    'PyCall',
-    'DataFrames'
+    'julia.jl',
+    'PyCall.jl',
+    'DataFrames.jl'
 ]).
 
-julia_pkg('PyCall').
-julia_pkg('DataFrames').
+julia_pkg(P) :- atom_concat(_, '.jl', P).
