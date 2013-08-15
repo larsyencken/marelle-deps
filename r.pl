@@ -36,6 +36,8 @@ cran_pkg(e1071).
 cran_pkg(medley).
 cran_pkg(devtools).
 cran_pkg(xts).
+cran_pkg(maps).
+cran_pkg(geosphere).
 
 r_pkg(P) :- cran_pkg(P) ; rgithub_pkg(P).
 
