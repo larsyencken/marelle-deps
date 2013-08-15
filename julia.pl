@@ -47,8 +47,6 @@ managed_pkg(m4).
 :- multifile julia_pkg/1.
 :- dynamic julia_updated/0.
 
-pkg(P) :- julia_pkg(P).
-
 met(P, _) :-
     julia_pkg(P), !,
     atom_concat(Pkg, '.jl', P),
@@ -65,10 +63,15 @@ meet(P, _) :-
     ),
     bash(['julia -e \'Pkg.add("', Pkg, '")\'']).
 
-meta_pkg('julia-recommended', [
-    'julia.jl',
-    'PyCall.jl',
-    'DataFrames.jl'
-]).
+julia_pkg(P) :- nonvar(P), atom_concat(_, '.jl', P).
 
-julia_pkg(P) :- atom_concat(_, '.jl', P).
+pkg('PyCall.jl').
+pkg('DataFrames.jl').
+pkg('Calendar.jl').
+
+meta_pkg('julia-recommended', [
+    'julia',
+    'PyCall.jl',
+    'DataFrames.jl',
+    'Calendar.jl'
+]).

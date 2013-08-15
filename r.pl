@@ -28,9 +28,22 @@ meta_pkg('r-recommended', [
   'geosphere.R'
 ]).
 
+pkg('caret.R').
+pkg('reshape.R').
+pkg('randomForest.R').
+pkg('RColorBrewer.R').
+pkg('boot.R').
+pkg('tree.R').
+pkg('e1071.R').
+pkg('medley.R').
+pkg('xts.R').
+pkg('maps.R').
+pkg('geosphere.R').
 
-pkg(P) :- cran_pkg(P, _).
-cran_pkg(P, PkgName) :- atom_concat(PkgName, '.R', P).
+pkg(P) :- nonvar(P), cran_pkg(P, _).
+cran_pkg(P, PkgName) :-
+    atom_concat(PkgName, '.R', P).
+
 depends(P, _, [r]) :- cran_pkg(P, _).
 met(P, _) :- cran_pkg(P, PkgName), imports_with_r(PkgName).
 meet(P, _) :-
