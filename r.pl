@@ -15,60 +15,50 @@ installs_with_apt(r, 'r-base').
 installs_with_brew(r, 'R').
 
 meta_pkg('r-recommended', [
-  caret,
-  reshape,
-  randomForest,
-  'RColorBrewer',
-  boot,
-  tree,
-  e1071,
-  medley,
-  xts
+  'caret.R',
+  'reshape.R',
+  'randomForest.R',
+  'RColorBrewer.R',
+  'boot.R',
+  'tree.R',
+  'e1071.R',
+  %'medley.R',
+  'xts.R',
+  'maps.R',
+  'geosphere.R'
 ]).
 
-cran_pkg(caret).
-cran_pkg(reshape).
-cran_pkg(randomForest).
-cran_pkg('RColorBrewer').
-cran_pkg(boot).
-cran_pkg(tree).
-cran_pkg(e1071).
-cran_pkg(medley).
-cran_pkg(devtools).
-cran_pkg(xts).
-cran_pkg(maps).
-cran_pkg(geosphere).
 
-r_pkg(P) :- cran_pkg(P) ; rgithub_pkg(P).
-
-pkg(P) :- r_pkg(P).
-
-met(P, _) :-
-    r_pkg(P), !,
-    bash(['Rscript -e \'library("', P, '")\' >/dev/null 2>/dev/null']).
-
+pkg(P) :- cran_pkg(P, _).
+cran_pkg(P, PkgName) :- atom_concat(PkgName, '.R', P).
+depends(P, _, [r]) :- cran_pkg(P, _).
+met(P, _) :- cran_pkg(P, PkgName), imports_with_r(PkgName).
 meet(P, _) :-
-    cran_pkg(P), !,
+    cran_pkg(P, Pkg),
     r_cran_mirror(M),
     ( access_file('/usr/local/lib', write) ->
         Sudo = ''
     ;
         Sudo = 'sudo '
     ),
-    bash([Sudo, 'Rscript -e \'install.packages("', P, '", repos="', M, '")\'']).
+    bash([Sudo, 'Rscript -e \'install.packages("', Pkg, '", repos="', M, '")\'']).
 
-depends(P, _, [r]) :- r_pkg(P).
+imports_with_r(P) :-
+    bash(['Rscript -e \'library("', P, '")\' >/dev/null 2>/dev/null']).
 
-rgithub_pkg(assertthat).
-rgithub_pkg(dplyr).
-depends(dplyr, _, [assertthat]).
 
-depends(P, _, [devtools]) :- rgithub_pkg(P).
+pkg(P) :- rgithub_pkg(P).
+met(P, _) :- rgithub_pkg(P), imports_with_r(P).
+depends(P, _, ['devtools.R']) :- rgithub_pkg(P).
 
 meet(P, _) :-
-    rgithub_pkg(P), !,
+    rgithub_pkg(P),
     bash([
         'Rscript -e \'',
         'library("RCurl"); library("devtools"); devtools::install_github("',
         P, '")\''
     ]).
+
+rgithub_pkg(assertthat).
+rgithub_pkg(dplyr).
+depends(dplyr, _, [assertthat]).
