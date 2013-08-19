@@ -48,7 +48,7 @@ managed_pkg(m4).
 :- dynamic julia_updated/0.
 
 met(P, _) :-
-    julia_pkg(P), !,
+    (julia_pkg(P) ; julia_pkg2(P)), !,
     atom_concat(Pkg, '.jl', P),
     bash(['! julia -e "using ', Pkg, '" 2>&1 | fgrep ERROR &>/dev/null']).
 
@@ -63,15 +63,37 @@ meet(P, _) :-
     ),
     bash(['julia -e \'Pkg.add("', Pkg, '")\'']).
 
+meet(P, _) :-
+    julia_pkg2(P), !,
+    atom_concat(Pkg, '.jl2', P),
+    ( \+ julia_updated ->
+        bash(['julia -e "Pkg2.update()"']),
+        assertz(julia_updated)
+    ;
+        true
+    ),
+    bash(['julia -e \'Pkg2.add("', Pkg, '")\'']).
+
 julia_pkg(P) :- nonvar(P), atom_concat(_, '.jl', P).
+julia_pkg2(P) :- nonvar(P), atom_concat(_, '.jl2', P).
 
 pkg('PyCall.jl').
 pkg('DataFrames.jl').
 pkg('Calendar.jl').
+pkg('Gadfly.jl').
+pkg('Cairo.jl').
+pkg('IJulia.jl2').
+pkg('HttpServer.jl2').
+
+
+% enables dynamic packages, but makes pkg('PyCall.jl') succeed twice
+pkg(P) :- nonvar(P), julia_pkg(P).
 
 meta_pkg('julia-recommended', [
     'julia',
     'PyCall.jl',
     'DataFrames.jl',
-    'Calendar.jl'
+    'Calendar.jl',
+    'Gadfly.jl',
+    'IJulia.jl2'
 ]).
