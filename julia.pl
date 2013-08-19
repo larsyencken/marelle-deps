@@ -90,6 +90,13 @@ pkg('Gadfly.jl').
 pkg('Cairo.jl').
 pkg('IJulia.jl2').
 pkg('HttpServer.jl2').
+pkg('Meddle.jl2').
+
+pkg('Morsel.jl2').
+depends('Morsel.jl2', _, ['HttpServer.jl2', 'Meddle.jl2']).
+
+pkg('Winston.jl').
+pkg('Distributions.jl').
 
 
 % enables dynamic packages, but makes pkg('PyCall.jl') succeed twice
@@ -101,5 +108,8 @@ meta_pkg('julia-recommended', [
     'DataFrames.jl',
     'Calendar.jl',
     'Gadfly.jl',
-    'IJulia.jl2'
+    'IJulia.jl2',
+    'HttpServer.jl2',
+    'Meddle.jl2',
+    'Morsel.jl2'
 ]).
