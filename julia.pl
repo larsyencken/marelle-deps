@@ -44,11 +44,13 @@ managed_pkg(gfortran).
 managed_pkg(m4).
 
 % define julia packages
-:- multifile julia_pkg/1.
 :- dynamic julia_updated/0.
+:- dynamic julia_updated2/0.
+
+julia_pkg(P) :- nonvar(P), atom_concat(_, '.jl', P).
 
 met(P, _) :-
-    (julia_pkg(P) ; julia_pkg2(P)), !,
+    julia_pkg(P), !,
     atom_concat(Pkg, '.jl', P),
     bash(['! julia -e "using ', Pkg, '" 2>&1 | fgrep ERROR &>/dev/null']).
 
@@ -63,19 +65,23 @@ meet(P, _) :-
     ),
     bash(['julia -e \'Pkg.add("', Pkg, '")\'']).
 
+julia_pkg2(P) :- nonvar(P), atom_concat(_, '.jl2', P).
+
+met(P, _) :-
+    julia_pkg2(P), !,
+    atom_concat(Pkg, '.jl2', P),
+    bash(['! julia -e "using ', Pkg, '" 2>&1 | fgrep ERROR &>/dev/null']).
+
 meet(P, _) :-
     julia_pkg2(P), !,
     atom_concat(Pkg, '.jl2', P),
-    ( \+ julia_updated ->
+    ( \+ julia_updated2 ->
         bash(['julia -e "Pkg2.update()"']),
-        assertz(julia_updated)
+        assertz(julia_updated2)
     ;
         true
     ),
     bash(['julia -e \'Pkg2.add("', Pkg, '")\'']).
-
-julia_pkg(P) :- nonvar(P), atom_concat(_, '.jl', P).
-julia_pkg2(P) :- nonvar(P), atom_concat(_, '.jl2', P).
 
 pkg('PyCall.jl').
 pkg('DataFrames.jl').
