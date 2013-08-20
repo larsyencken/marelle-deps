@@ -75,3 +75,13 @@ pip_pkg('scikits.audiolab').
 depends('scikits.audiolab', _, [libsndfile]).
 
 managed_pkg('libsndfile').
+
+:- dynamic setuptoolsfix/0.
+pkg('setuptools-fix').
+met('setuptools-fix', _) :- setuptoolsfix.
+meet('setuptools-fix', _) :-
+    bash('curl -O http://python-distribute.org/distribute_setup.py'),
+    bash('python distribute_setup.py'),
+    bash('easy_install -U pip'),
+    bash('rm distribute_setup.py && rm distribute-*.tar.gz'),
+    assertz(setuptoolsfix).
