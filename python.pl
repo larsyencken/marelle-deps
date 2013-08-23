@@ -40,10 +40,22 @@ pip_pkg(flask).
 pip_pkg(anytop).
 pip_pkg(networkx).
 pip_pkg(csvkit).
-pip_pkg(statsmodels).
+pip_pkg(patsy).
 pip_pkg('nodebox-opengl').
-pip_pkg(h5py).
+pip_pkg(numexpr).
+
 pip_pkg(tables).
+depends(tables, _, [numexpr]).
+
+pip_pkg(statsmodels).
+depends(statsmodels, _, [patsy]).
+
+pip_pkg(h5py).
+depends(h5py, _, [hdf5]).
+
+pkg(hdf5).
+installs_with_apt(hdf5, 'libhdf5-serial-dev').
+installs_with_brew(hdf5).
 
 command_pkg(ipython).
 installs_with_apt(ipython).
