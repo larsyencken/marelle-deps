@@ -30,3 +30,4 @@ command_pkg(ctags).
 installs_with_apt(ctags, 'exuberant-ctags').
 
 pip_pkg(flake8).
+depends(flake8, _, ['setuptools-fix']).

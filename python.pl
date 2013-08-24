@@ -93,7 +93,12 @@ pkg('setuptools-fix').
 met('setuptools-fix', _) :- setuptoolsfix.
 meet('setuptools-fix', _) :-
     bash('curl -O http://python-distribute.org/distribute_setup.py'),
-    bash('python distribute_setup.py'),
-    bash('easy_install -U pip'),
-    bash('rm distribute_setup.py && rm distribute-*.tar.gz'),
+    ( access_file('/usr/local/lib', write) ->
+        Sudo = ''
+    ;
+        Sudo = 'sudo '
+    ),
+    bash([Sudo, 'python distribute_setup.py']),
+    bash([Sudo, 'easy_install -U pip']),
+    bash('rm -f distribute_setup.py && rm -f distribute-*.tar.gz'),
     assertz(setuptoolsfix).
