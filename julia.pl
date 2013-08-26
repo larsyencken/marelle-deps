@@ -91,12 +91,15 @@ pkg('Cairo.jl').
 pkg('IJulia.jl2').
 pkg('HttpServer.jl2').
 pkg('Meddle.jl2').
+pkg('HDF5.jl').
+depends('HDF5.jl', _, [hdf5]).
 
 pkg('Morsel.jl2').
 depends('Morsel.jl2', _, ['HttpServer.jl2', 'Meddle.jl2']).
 
 pkg('Winston.jl').
 pkg('Distributions.jl').
+pkg('ODBC.jl').
 
 
 % enables dynamic packages, but makes pkg('PyCall.jl') succeed twice
