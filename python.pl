@@ -54,7 +54,7 @@ pip_pkg(h5py).
 depends(h5py, _, [hdf5]).
 
 pkg(hdf5).
-installs_with_apt(hdf5, 'libhdf5-serial-dev').
+installs_with_apt(hdf5, 'hdf5-tools').
 installs_with_brew(hdf5).
 
 command_pkg(ipython).
