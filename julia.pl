@@ -91,6 +91,8 @@ pkg('Cairo.jl').
 pkg('IJulia.jl2').
 pkg('HttpServer.jl2').
 pkg('Meddle.jl2').
+pkg('RDatasets.jl').
+
 pkg('HDF5.jl').
 depends('HDF5.jl', _, [hdf5]).
 
