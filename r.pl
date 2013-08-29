@@ -60,18 +60,22 @@ imports_with_r(P) :-
     bash(['Rscript -e \'library("', P, '")\' >/dev/null 2>/dev/null']).
 
 
-pkg(P) :- rgithub_pkg(P).
-met(P, _) :- rgithub_pkg(P), imports_with_r(P).
-depends(P, _, ['devtools.R']) :- rgithub_pkg(P).
+:- multifile rgithub_pkg/2.
+
+pkg(P) :- rgithub_pkg(P, _).
+met(P, _) :- rgithub_pkg(P, _), imports_with_r(P).
+depends(P, _, ['devtools.R']) :- rgithub_pkg(P, _).
 
 meet(P, _) :-
-    rgithub_pkg(P),
+    rgithub_pkg(P, User),
     bash([
         'Rscript -e \'',
         'library("RCurl"); library("devtools"); devtools::install_github("',
-        P, '")\''
+        P, '", "', User, '")\''
     ]).
 
-rgithub_pkg(assertthat).
-rgithub_pkg(dplyr).
+rgithub_pkg(rga, skardhamar).
+rgithub_pkg(assertthat, hadley).
+
+rgithub_pkg(dplyr, hadley).
 depends(dplyr, _, [assertthat]).
