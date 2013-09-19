@@ -92,6 +92,9 @@ pkg('IJulia.jl2').
 pkg('HttpServer.jl2').
 pkg('Meddle.jl2').
 pkg('RDatasets.jl').
+pkg('GLM.jl').
+pkg('Graphs.jl').
+pkg('Homebrew.jl').
 
 pkg('HDF5.jl').
 depends('HDF5.jl', _, [hdf5]).
@@ -102,6 +105,8 @@ depends('Morsel.jl2', _, ['HttpServer.jl2', 'Meddle.jl2']).
 pkg('Winston.jl').
 pkg('Distributions.jl').
 pkg('ODBC.jl').
+
+depends('IJulia.jl2', osx, ['Homebrew.jl']).
 
 
 % enables dynamic packages, but makes pkg('PyCall.jl') succeed twice
@@ -116,5 +121,7 @@ meta_pkg('julia-recommended', [
     'IJulia.jl2',
     'HttpServer.jl2',
     'Meddle.jl2',
-    'Morsel.jl2'
+    'Morsel.jl2',
+    'GLM.jl',
+    'Graphs.jl'
 ]).
