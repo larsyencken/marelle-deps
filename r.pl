@@ -39,6 +39,11 @@ pkg('medley.R').
 pkg('xts.R').
 pkg('maps.R').
 pkg('geosphere.R').
+pkg('ROAuth.R').
+pkg('RCurl.R').
+
+pkg('twitteR.R').
+depends('twitteR.R', _, ['ROAuth.R', 'RCurl.R']).
 
 pkg(P) :- nonvar(P), cran_pkg(P, _).
 cran_pkg(P, PkgName) :-
