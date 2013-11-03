@@ -26,9 +26,11 @@ depends(simplecv, _, [
     ipython,
     numpy,
     scipy,
-    pil
+    pil,
+    svgwrite
 ]).
 
+pip_pkg(svgwrite).
 
 % we could use Pillow via pip instead
 python_pkg(pil, 'PIL').
