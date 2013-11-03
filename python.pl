@@ -56,6 +56,9 @@ depends(h5py, _, [hdf5]).
 pkg(hdf5).
 installs_with_apt(hdf5, 'hdf5-tools').
 installs_with_brew(hdf5).
+depends(hdf5, linux(_), ['libhdf5-dev']).
+
+managed_pkg('libhdf5-dev').
 
 command_pkg(ipython).
 installs_with_apt(ipython).
