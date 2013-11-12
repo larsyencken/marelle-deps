@@ -84,7 +84,6 @@ meet(P, _) :-
     bash(['julia -e \'Pkg2.add("', Pkg, '")\'']).
 
 pkg('PyCall.jl').
-pkg('DataFrames.jl').
 pkg('Calendar.jl').
 pkg('Gadfly.jl').
 pkg('Cairo.jl').
@@ -95,6 +94,10 @@ pkg('RDatasets.jl').
 pkg('GLM.jl').
 pkg('Graphs.jl').
 pkg('Homebrew.jl').
+pkg('DataArray.jl').
+
+pkg('DataFrames.jl').
+depends('DataFrames.jl', _, ['DataArray.jl']).
 
 pkg('HDF5.jl').
 depends('HDF5.jl', _, [hdf5]).
