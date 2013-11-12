@@ -11,3 +11,7 @@ These deps come with some recommended collections for different languages and pu
 - `r-recommended`: a set of R Packages for data analysis and machine learning
 
 Run `marelle list recommended` to see more.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/larsyencken/marelle-deps/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+
