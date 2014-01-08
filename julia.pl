@@ -87,29 +87,30 @@ pkg('PyCall.jl').
 pkg('Calendar.jl').
 pkg('Gadfly.jl').
 pkg('Cairo.jl').
-pkg('IJulia.jl2').
-pkg('HttpServer.jl2').
-pkg('Meddle.jl2').
+pkg('IJulia.jl').
+pkg('HttpServer.jl').
+pkg('Meddle.jl').
 pkg('RDatasets.jl').
 pkg('GLM.jl').
 pkg('Graphs.jl').
 pkg('Homebrew.jl').
-pkg('DataArray.jl').
+pkg('DataArrays.jl').
+pkg('ODBC.jl').
 
 pkg('DataFrames.jl').
-depends('DataFrames.jl', _, ['DataArray.jl']).
+depends('DataFrames.jl', _, ['DataArrays.jl']).
 
 pkg('HDF5.jl').
 depends('HDF5.jl', _, [hdf5]).
 
-pkg('Morsel.jl2').
-depends('Morsel.jl2', _, ['HttpServer.jl2', 'Meddle.jl2']).
+pkg('Morsel.jl').
+depends('Morsel.jl', _, ['HttpServer.jl', 'Meddle.jl']).
 
 pkg('Winston.jl').
 pkg('Distributions.jl').
 pkg('ODBC.jl').
 
-depends('IJulia.jl2', osx, ['Homebrew.jl']).
+depends('IJulia.jl', osx, ['Homebrew.jl']).
 
 
 % enables dynamic packages, but makes pkg('PyCall.jl') succeed twice
@@ -121,10 +122,10 @@ meta_pkg('julia-recommended', [
     'DataFrames.jl',
     'Calendar.jl',
     'Gadfly.jl',
-    'IJulia.jl2',
-    'HttpServer.jl2',
-    'Meddle.jl2',
-    'Morsel.jl2',
-    'GLM.jl',
-    'Graphs.jl'
+    'IJulia.jl',
+    'HttpServer.jl',
+    'Meddle.jl',
+    'Morsel.jl',
+    'Graphs.jl',
+    'ODBC.jl'
 ]).
