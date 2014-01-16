@@ -39,8 +39,13 @@ met(ncurses, osx) :-
     isfile('/usr/lib/libncurses.dylib').
 installs_with_apt(ncurses, precise, libncurses5).
 installs_with_apt(ncurses, raring, libncurses5).
+installs_with_pacman(ncurses).
 
-managed_pkg(gfortran).
+command_pkg(gfortran).
+installs_with_apt(gfortran).
+installs_with_brew(gfortran).
+installs_with_pacman(gfortran, 'gcc-fortran').
+
 managed_pkg(m4).
 
 % define julia packages
