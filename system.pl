@@ -5,7 +5,10 @@
 %  Basic system utility packages.
 %
 
-managed_pkg(htop).
+command_pkg(htop).
+installs_with_apt(htop).
+installs_with_brew(htop).
+
 managed_pkg(mercurial).
 managed_pkg(screen).
 
