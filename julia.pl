@@ -93,7 +93,6 @@ pkg('Calendar.jl').
 pkg('Gadfly.jl').
 pkg('Cairo.jl').
 pkg('IJulia.jl').
-pkg('HttpServer.jl').
 pkg('Meddle.jl').
 pkg('RDatasets.jl').
 pkg('GLM.jl').
@@ -101,6 +100,10 @@ pkg('Graphs.jl').
 pkg('Homebrew.jl').
 pkg('DataArrays.jl').
 pkg('ODBC.jl').
+
+pkg('HttpServer.jl').
+depends('HttpServer.jl', osx, [gnutls]).
+managed_pkg(gnutls).
 
 pkg('DataFrames.jl').
 depends('DataFrames.jl', _, ['DataArrays.jl']).
