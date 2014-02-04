@@ -20,16 +20,12 @@ meta_pkg('python-recommended', [
 
 python_pkg(numpy).
 installs_with_apt(numpy, 'python-numpy').
-installs_with_brew(numpy).
-depends(numpy, osx, ['homebrew-science-tap']).
+installs_with_pip(numpy) :- platform(osx).
 
 python_pkg(scipy).
 installs_with_apt(scipy, 'python-scipy').
-installs_with_brew(scipy).
-depends(scipy, _, [gfortran, cython]).
-depends(scipy, osx, ['homebrew-science-tap']).
-
-brew_tap('homebrew-science-tap', 'homebrew/science').
+installs_with_pip(scipy) :- platform(osx).
+depends(scipy, osx, [gfortran, cython]).
 
 command_pkg(virtualenv).
 installs_with_pip(virtualenv).
@@ -39,7 +35,21 @@ pip_pkg(clint).
 pip_pkg(flask).
 pip_pkg(anytop).
 pip_pkg(networkx).
-pip_pkg(csvkit).
+
+command_pkg(csvkit, csvcut).
+meet(csvkit, _) :-
+    Pkg = csvkit,
+    which(pip, Pip),
+    atom_concat(Parent, '/pip', Pip),
+    ( access_file(Parent, write) ->
+        Sudo = ''
+    ;
+        Sudo = 'sudo '
+    ),
+    join(['Installing ', Pkg, ' with pip'], Msg),
+    writeln(Msg),
+    bash(['umask a+rx && ', Sudo, 'pip install -U --allow-external argparse ', Pkg]).
+
 pip_pkg(patsy).
 pip_pkg('nodebox-opengl').
 pip_pkg(numexpr).
@@ -62,7 +72,6 @@ managed_pkg('libhdf5-dev').
 
 command_pkg(ipython).
 installs_with_apt(ipython).
-meet(ipython, osx) :- install_pip(ipython).
 depends(ipython, osx, [pip]).
 
 %  Vincent: a python to vega translator for charting
@@ -72,8 +81,10 @@ meet(vincent, _) :- install_pip('https://github.com/wrobstory/vincent/archive/ma
 
 python_pkg(matplotlib).
 installs_with_apt(matplotlib, 'python-matplotlib').
-installs_with_brew(matplotlib).
-depends(matplotlib, osx, ['homebrew-samueljohn-tap']).
+installs_with_pip(matplotlib) :- platform(osx).
+depends(matplotlib, osx, [freetype]).
+
+managed_pkg(freetype).
 
 command_pkg(pypy).
 installs_with_brew(pypy).
