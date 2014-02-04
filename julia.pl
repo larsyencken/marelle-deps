@@ -25,9 +25,9 @@ meet('__julia built', _) :-
     bash('cd ~/.local/julia && make -j4').
 depends('__julia built', _, [
     gfortran,
-    m4,
     ncurses
 ]).
+depends('__julia built', linux(_), [m4]).
 
 pkg('__julia symlinked').
 met('__julia symlinked', _) :- isfile('~/.local/bin/julia').
