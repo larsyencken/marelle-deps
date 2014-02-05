@@ -13,6 +13,9 @@ pkg(r).
 met(r, _) :- which('R').
 installs_with_apt(r, 'r-base').
 installs_with_brew(r, 'R').
+depends(r, osx, ['homebrew-science-tap']).
+
+brew_tap('homebrew-science-tap', 'homebrew/science').
 
 meta_pkg('r-recommended', [
   'caret.R',
