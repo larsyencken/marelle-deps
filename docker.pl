@@ -11,7 +11,7 @@ depends(docker, linux(_), '__docker ppa').
 depends(docker, osx, [boot2docker]).
 
 meet(docker, osx) :-
-    curl('http://get.docker.io/builds/Darwin/x86_64/docker-latest', '~/.local/bin/docker'),
+    curl('https://get.docker.io/builds/Darwin/x86_64/docker-latest', '~/.local/bin/docker'),
     bash('chmod a+x ~/.local/bin/docker').
 
 git_step('docker-source',
