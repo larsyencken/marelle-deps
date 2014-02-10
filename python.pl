@@ -67,12 +67,16 @@ pkg(hdf5).
 installs_with_apt(hdf5, 'hdf5-tools').
 installs_with_brew(hdf5).
 depends(hdf5, linux(_), ['libhdf5-dev']).
+depends(hdf5, osx, 'homebrew-science-tap').
 
 managed_pkg('libhdf5-dev').
 
 command_pkg(ipython).
 installs_with_apt(ipython).
-depends(ipython, osx, [pip]).
+installs_with_pip(ipython, 'ipython[notebook]') :- platform(osx).
+depends(ipython, osx, [pip, zeromq]).
+
+managed_pkg(zeromq).
 
 %  Vincent: a python to vega translator for charting
 %  https://github.com/wrobstory/vincent/
