@@ -15,7 +15,8 @@ meta_pkg('python-recommended', [
     ipython,
     csvkit,
     h5py,
-    tables
+    tables,
+    'scikit-learn'
 ]).
 
 python_pkg(numpy).
@@ -35,6 +36,7 @@ pip_pkg(clint).
 pip_pkg(flask).
 pip_pkg(anytop).
 pip_pkg(networkx).
+pip_pkg('scikit-learn').
 
 command_pkg(csvkit, csvcut).
 meet(csvkit, _) :-
