@@ -25,7 +25,7 @@ pkg('elastic-mapreduce-configured').
 met('elastic-mapreduce-configured', _) :-
     isfile('~/.local/elastic-mapreduce/credentials.json').
 meet('elastic-mapreduce-configured', _) :-
-    bash('ln -s ~/.aws/current/emr-credentials.json ~/.local/elastic-mapreduce/credentials.json').
+    bash('ln -s ~/.aws/current/credentials.json ~/.local/elastic-mapreduce/credentials.json').
 depends('elastic-mapreduce-configured', _, [
     'elastic-mapreduce'
 ]).
@@ -47,4 +47,5 @@ meet('__emr shim', _) :-
     make_executable(F).
 depends('__emr shim', _, ['__emr client']).
 
-managed_pkg(unzip).
+command_pkg(unzip).
+installs_with_apt(unzip).
