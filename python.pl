@@ -86,7 +86,16 @@ meet(vincent, _) :- install_pip('https://github.com/wrobstory/vincent/archive/ma
 python_pkg(matplotlib).
 installs_with_apt(matplotlib, 'python-matplotlib').
 installs_with_pip(matplotlib) :- platform(osx).
-depends(matplotlib, osx, [freetype]).
+depends(matplotlib, osx, ['freetype symlinked']).
+
+% freetype has to be symlinked on osx 10.9 for matplotlib to pick it up
+% during install
+pkg('freetype symlinked') :- platform(osx).
+met('freetype symlinked', osx) :-
+    isdir('/usr/local/include/freetype').
+meet('freetype symlinked', osx) :-
+    bash('ln -s /usr/local/include/freetype2 /usr/local/include/freetype').
+depends('freetype symlinked', osx, [freetype]).
 
 managed_pkg(freetype).
 

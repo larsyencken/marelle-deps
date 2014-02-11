@@ -32,6 +32,8 @@ meta_pkg('r-recommended', [
 ]).
 
 pkg('caret.R').
+depends('caret.R', osx, [gettext]).
+
 pkg('reshape.R').
 pkg('randomForest.R').
 pkg('RColorBrewer.R').
@@ -87,3 +89,10 @@ rgithub_pkg(assertthat, hadley).
 
 rgithub_pkg(dplyr, hadley).
 depends(dplyr, _, [assertthat]).
+
+pkg(gettext).
+met(gettext, osx) :-
+    isfile('/usr/local/lib/libintl.dylib').
+meet(gettext, osx) :-
+    bash('brew install gettext'),
+    bash('brew link gettext --force').
