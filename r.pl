@@ -29,7 +29,8 @@ meta_pkg('r-recommended', [
   'xts.R',
   'maps.R',
   'geosphere.R',
-  'RMySQL.R'
+  'RMySQL.R',
+  'psych.R'
 ]).
 
 pkg('caret.R').
@@ -48,6 +49,7 @@ pkg('geosphere.R').
 pkg('ROAuth.R').
 pkg('RCurl.R').
 pkg('RMySQL.R').
+pkg('psych.R').
 
 pkg('twitteR.R').
 depends('twitteR.R', _, ['ROAuth.R', 'RCurl.R']).
