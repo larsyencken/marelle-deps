@@ -1,5 +1,5 @@
 %
-%  drake.pl
+%  clojure.pl
 %  marelle-deps
 %
 %  A make replacement in Clojure.
