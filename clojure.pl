@@ -2,8 +2,6 @@
 %  clojure.pl
 %  marelle-deps
 %
-%  A make replacement in Clojure.
-%
 
 managed_pkg(clojure).
 
