@@ -60,8 +60,7 @@ installs_with_apt(opencv, 'libopencv-dev').
 installs_with_brew(opencv).
 depends(opencv, osx, ['homebrew-science-tap']).
 
-command_pkg(cython).
-installs_with_pip(cython).
+pip_pkg(cython).
 
 pkg(zbar).
 installs_with_brew(zbar).

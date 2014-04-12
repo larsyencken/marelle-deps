@@ -57,7 +57,7 @@ pip_pkg('nodebox-opengl').
 pip_pkg(numexpr).
 
 pip_pkg(tables).
-depends(tables, _, [numexpr]).
+depends(tables, _, [numexpr, cython]).
 
 pip_pkg(statsmodels).
 depends(statsmodels, _, [patsy]).
