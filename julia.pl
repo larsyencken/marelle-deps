@@ -5,54 +5,43 @@
 %  The Julia language for scientific computing.
 %
 
-pkg(julia).
-met(julia, _) :- isfile('~/.local/bin/julia').
-meet(julia, _).
-depends(julia, _, [
-    '__julia checked out',
-    '__julia built',
-    '__julia symlinked'
-]).
+%
+%  julia
+%
+%  Install Julia as a binary package.
+%
+command_pkg(julia).
 
-git_step('__julia checked out',
-    'https://github.com/JuliaLang/julia',
-    '~/.local/julia'
-).
+meet(julia, osx).  % met by dependencies
+depends(julia, osx, ['julia-cask', 'julia-cask-symlink']).
 
-pkg('__julia built').
-met('__julia built', _) :- isfile('~/.local/julia/julia').
-meet('__julia built', _) :-
-    bash('cd ~/.local/julia && make -j4').
-depends('__julia built', _, [
-    gfortran,
-    ncurses
-]).
-depends('__julia built', linux(_), [m4]).
+cask_pkg('julia-cask', julia).
 
-pkg('__julia symlinked').
-met('__julia symlinked', _) :- isfile('~/.local/bin/julia').
-meet('__julia symlinked', _) :-
-    bash('ln -s ~/.local/julia/julia ~/.local/bin/julia').
+julia_cask_version(V) :-
+    sh_output('brew cask info julia | head -n 1 | cut -d " " -f 2', V).
 
-pkg(ncurses).
-met(ncurses, osx) :-
-    isfile('/usr/lib/libncurses.dylib').
-installs_with_apt(ncurses, precise, libncurses5).
-installs_with_apt(ncurses, raring, libncurses5).
-installs_with_pacman(ncurses).
+julia_cask_exec(Exec) :-
+    julia_cask_version(V),
+    join(['/opt/homebrew-cask/Caskroom/julia/', V, '/Julia-', V,
+          '.app/Contents/Resources/julia/bin/julia'],
+         Exec).
 
-command_pkg(gfortran).
-installs_with_apt(gfortran).
-installs_with_brew(gfortran).
-installs_with_pacman(gfortran, 'gcc-fortran').
+pkg('julia-cask-symlink').
+met('julia-cask-symlink', osx) :-
+    julia_cask_exec(Exec),
+    is_symlinked(Exec, '/usr/local/bin/julia').
+meet('julia-cask-symlink', osx) :-
+    julia_cask_exec(Exec),
+    symlink(Exec, '/usr/local/bin/julia').
 
-managed_pkg(m4).
-
-% define julia packages
+%
+%  julia_pkg
+%
+%  Install Julia packages using Julia's internal package management.
+%
 :- dynamic julia_updated/0.
-:- dynamic julia_updated2/0.
 
-julia_pkg(P) :- nonvar(P), atom_concat(_, '.jl', P).
+pkg(P) :- julia_pkg(P).
 
 met(P, _) :-
     julia_pkg(P), !,
@@ -70,70 +59,40 @@ meet(P, _) :-
     ),
     bash(['julia -e \'Pkg.add("', Pkg, '")\'']).
 
-julia_pkg2(P) :- nonvar(P), atom_concat(_, '.jl2', P).
+depends(P, _, [julia]) :- julia_pkg(P).
 
-met(P, _) :-
-    julia_pkg2(P), !,
-    atom_concat(Pkg, '.jl2', P),
-    bash(['! julia -e "using ', Pkg, '" 2>&1 | fgrep ERROR &>/dev/null']).
-
-meet(P, _) :-
-    julia_pkg2(P), !,
-    atom_concat(Pkg, '.jl2', P),
-    ( \+ julia_updated2 ->
-        bash(['julia -e "Pkg2.update()"']),
-        assertz(julia_updated2)
-    ;
-        true
-    ),
-    bash(['julia -e \'Pkg2.add("', Pkg, '")\'']).
-
-pkg('PyCall.jl').
-pkg('Calendar.jl').
-pkg('Gadfly.jl').
-pkg('Cairo.jl').
-pkg('IJulia.jl').
-pkg('Meddle.jl').
-pkg('RDatasets.jl').
-pkg('GLM.jl').
-pkg('Graphs.jl').
-pkg('Homebrew.jl').
-pkg('DataArrays.jl').
-pkg('ODBC.jl').
-
-pkg('HttpServer.jl').
-depends('HttpServer.jl', osx, [gnutls]).
-managed_pkg(gnutls).
-
-pkg('DataFrames.jl').
-depends('DataFrames.jl', _, ['DataArrays.jl']).
-
-pkg('HDF5.jl').
-depends('HDF5.jl', _, [hdf5]).
-
-pkg('Morsel.jl').
-depends('Morsel.jl', _, ['HttpServer.jl', 'Meddle.jl']).
-
-pkg('Winston.jl').
-pkg('Distributions.jl').
-pkg('ODBC.jl').
-
-depends('IJulia.jl', osx, ['Homebrew.jl']).
-
-
-% enables dynamic packages, but makes pkg('PyCall.jl') succeed twice
-pkg(P) :- nonvar(P), julia_pkg(P).
+%
+%  julia packages
+%
+%  My personal collection of interesting packages.
+%
 
 meta_pkg('julia-recommended', [
-    'julia',
-    'PyCall.jl',
-    'DataFrames.jl',
     'Calendar.jl',
+    'DataFrames.jl',
     'Gadfly.jl',
-    'IJulia.jl',
+    'Graphs.jl',
     'HttpServer.jl',
+    'IJulia.jl',
     'Meddle.jl',
     'Morsel.jl',
-    'Graphs.jl',
-    'ODBC.jl'
+    'PyCall.jl'
 ]).
+
+julia_pkg('Cairo.jl').
+julia_pkg('Calendar.jl').
+julia_pkg('DataArrays.jl').
+julia_pkg('DataFrames.jl').
+julia_pkg('Distributions.jl').
+julia_pkg('GLM.jl').
+julia_pkg('Gadfly.jl').
+julia_pkg('Graphs.jl').
+julia_pkg('HDF5.jl').
+julia_pkg('Homebrew.jl').
+julia_pkg('HttpServer.jl').
+julia_pkg('IJulia.jl').
+julia_pkg('Meddle.jl').
+julia_pkg('Morsel.jl').
+julia_pkg('PyCall.jl').
+julia_pkg('RDatasets.jl').
+julia_pkg('Winston.jl').
