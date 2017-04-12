@@ -3,66 +3,59 @@
 %  marelle-deps
 %
 
+%
+%  a workbench of common tools in python
+%
 meta_pkg('python-recommended', [
-    numpy,
-    scipy,
-    networkx,
-    matplotlib,
-    pandas,
-    statsmodels,
-    virtualenv,
-    pip,
-    ipython,
     csvkit,
     h5py,
+    ipython,
+    jupyter,
+    matplotlib,
+    networkx,
+    numpy,
+    pandas,
+    pip,
+    scipy,
+    'scikit-learn',
+    sh,
+    statsmodels,
     tables,
-    'scikit-learn'
+    virtualenv
 ]).
 
-python_pkg(numpy).
-installs_with_apt(numpy, 'python-numpy').
-installs_with_pip(numpy) :- platform(osx).
-
-python_pkg(scipy).
-installs_with_apt(scipy, 'python-scipy').
-installs_with_pip(scipy) :- platform(osx).
-depends(scipy, osx, [gfortran, cython]).
+%
+%  meta pacakges for working with python
+%
+managed_pkg(pyenv).
 
 command_pkg(virtualenv).
 installs_with_pip(virtualenv).
 
-pip_pkg(pandas).
-pip_pkg(clint).
-pip_pkg(flask).
-pip_pkg(anytop).
-pip_pkg(networkx).
-pip_pkg('scikit-learn').
 
-command_pkg(csvkit, csvcut).
-meet(csvkit, _) :-
-    Pkg = csvkit,
-    which(pip, Pip),
-    atom_concat(Parent, '/pip', Pip),
-    ( access_file(Parent, write) ->
-        Sudo = ''
-    ;
-        Sudo = 'sudo '
-    ),
-    join(['Installing ', Pkg, ' with pip'], Msg),
-    writeln(Msg),
-    bash(['umask a+rx && ', Sudo, 'pip install -U --allow-external argparse ', Pkg]).
-
-pip_pkg(patsy).
-pip_pkg('nodebox-opengl').
-pip_pkg(numexpr).
-
-pip_pkg(tables).
-depends(tables, _, [numexpr, cython]).
-
-pip_pkg(statsmodels).
-depends(statsmodels, _, [patsy]).
-
+%
+%  common python packages
+%
+pip_pkg(csvkit).
 pip_pkg(h5py).
+pip_pkg(jupyter).
+pip_pkg(ipython).
+pip_pkg(matplotlib).
+pip_pkg(networkx).
+pip_pkg(numexpr).
+pip_pkg(numpy).
+pip_pkg(pandas).
+pip_pkg(pyaudio).
+pip_pkg(scipy).
+pip_pkg('scikit-learn').
+pip_pkg(sh).
+pip_pkg(statsmodels).
+pip_pkg(tables).
+
+
+%
+%  extra deps for h5py
+%
 depends(h5py, _, [hdf5]).
 
 pkg(hdf5).
@@ -73,61 +66,10 @@ depends(hdf5, osx, 'homebrew-science-tap').
 
 managed_pkg('libhdf5-dev').
 
-command_pkg(ipython).
-installs_with_apt(ipython).
-installs_with_pip(ipython, 'ipython[notebook]') :- platform(osx).
-depends(ipython, osx, [pip, zeromq]).
 
-managed_pkg(zeromq).
-
-%  Vincent: a python to vega translator for charting
-%  https://github.com/wrobstory/vincent/
-python_pkg(vincent).
-meet(vincent, _) :- install_pip('https://github.com/wrobstory/vincent/archive/master.zip').
-
-python_pkg(matplotlib).
-installs_with_apt(matplotlib, 'python-matplotlib').
-installs_with_pip(matplotlib) :- platform(osx).
-depends(matplotlib, osx, ['freetype symlinked']).
-
-% freetype has to be symlinked on osx 10.9 for matplotlib to pick it up
-% during install
-pkg('freetype symlinked') :- platform(osx).
-met('freetype symlinked', osx) :-
-    isdir('/usr/local/include/freetype').
-meet('freetype symlinked', osx) :-
-    bash('ln -s /usr/local/include/freetype2 /usr/local/include/freetype').
-depends('freetype symlinked', osx, [freetype]).
-
-managed_pkg(freetype).
-
-command_pkg(pypy).
-installs_with_brew(pypy).
-
-pip_pkg(pyaudio).
+%
+%  extra deps for pyaudio
+%
 depends(pyaudio, _, [portaudio]).
 
 managed_pkg(portaudio).
-
-command_pkg(fabric, fab).
-installs_with_pip(fabric).
-
-pip_pkg('scikits.audiolab').
-depends('scikits.audiolab', _, [libsndfile]).
-
-managed_pkg('libsndfile').
-
-:- dynamic setuptoolsfix/0.
-pkg('setuptools-fix').
-met('setuptools-fix', _) :- setuptoolsfix.
-meet('setuptools-fix', _) :-
-    bash('curl -O http://python-distribute.org/distribute_setup.py'),
-    ( access_file('/usr/local/lib', write) ->
-        Sudo = ''
-    ;
-        Sudo = 'sudo '
-    ),
-    bash([Sudo, 'python distribute_setup.py']),
-    bash([Sudo, 'easy_install -U pip']),
-    bash('rm -f distribute_setup.py && rm -f distribute-*.tar.gz'),
-    assertz(setuptoolsfix).
